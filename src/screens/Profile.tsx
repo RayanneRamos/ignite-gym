@@ -5,11 +5,12 @@ import {
   VStack,
   Skeleton,
   Heading,
+  useToast,
 } from "native-base";
 import { ScreenHeader } from "../components/ScreenHeader";
 import { UserPhoto } from "../components/UserPhoto";
 import { useState } from "react";
-import { Alert, TouchableOpacity } from "react-native";
+import { TouchableOpacity } from "react-native";
 import { Input } from "../components/Input";
 import { Button } from "../components/Button";
 import * as ImagePicker from "expo-image-picker";
@@ -23,6 +24,7 @@ export function Profile() {
   const [userPhoto, setUserPhoto] = useState(
     "https://github.com/RayanneRamos.png"
   );
+  const toast = useToast();
 
   async function handleUserPhotoSelect() {
     setPhotoIsLoading(true);
@@ -44,9 +46,11 @@ export function Profile() {
         )) as FileInfo;
 
         if (photoInfo.size && photoInfo.size / 1024 / 1024 > 5) {
-          return Alert.alert(
-            "Essa imagem é muito grande. Escolha uma de até 5MB."
-          );
+          return toast.show({
+            title: "Essa imagem é muito grande. Escolha uma de até 5MB.",
+            placement: "top",
+            bgColor: "red.500",
+          });
         }
 
         if (photoSelected.assets[0].uri) {
