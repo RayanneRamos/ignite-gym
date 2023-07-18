@@ -13,6 +13,7 @@ import { TouchableOpacity } from "react-native";
 import { Input } from "../components/Input";
 import { Button } from "../components/Button";
 import * as ImagePicker from "expo-image-picker";
+import * as FileSystem from "expo-file-system";
 
 const PHOTO_SIZE = 33;
 
@@ -37,6 +38,10 @@ export function Profile() {
       }
 
       if (photoSelected.assets[0].uri) {
+        const photoInfo = await FileSystem.getInfoAsync(
+          photoSelected.assets[0].uri
+        );
+
         setUserPhoto(photoSelected.assets[0].uri);
       }
     } catch (error) {
