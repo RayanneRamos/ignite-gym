@@ -60,10 +60,14 @@ export function SignUp() {
               required: "Informe o nome.",
             }}
             render={({ field: { onChange, value } }) => (
-              <Input placeholder="Nome" value={value} onChangeText={onChange} />
+              <Input
+                placeholder="Nome"
+                value={value}
+                onChangeText={onChange}
+                errorMessage={errors.name?.message}
+              />
             )}
           />
-          <Text color="red.500">{errors.name?.message}</Text>
           <Controller
             control={control}
             name="email"
@@ -81,10 +85,10 @@ export function SignUp() {
                 autoCapitalize="none"
                 value={value}
                 onChangeText={onChange}
+                errorMessage={errors.email?.message}
               />
             )}
           />
-          <Text color="red.500">{errors.email?.message}</Text>
           <Controller
             control={control}
             name="password"
@@ -97,10 +101,10 @@ export function SignUp() {
                 secureTextEntry
                 value={value}
                 onChangeText={onChange}
+                errorMessage={errors.password?.message}
               />
             )}
           />
-          <Text color="red.500">{errors.password?.message}</Text>
           <Controller
             control={control}
             name="password_confirm"
@@ -113,12 +117,12 @@ export function SignUp() {
                 secureTextEntry
                 value={value}
                 onChangeText={onChange}
+                errorMessage={errors.password_confirm?.message}
                 onSubmitEditing={handleSubmit(handleSignUp)}
                 returnKeyType="send"
               />
             )}
           />
-          <Text color="red.500">{errors.password_confirm?.message}</Text>
           <Button
             title="Criar e acessar"
             onPress={handleSubmit(handleSignUp)}
