@@ -63,12 +63,16 @@ export function SignUp() {
               <Input placeholder="Nome" value={value} onChangeText={onChange} />
             )}
           />
-          <Text color="white">{errors.name?.message}</Text>
+          <Text color="red.500">{errors.name?.message}</Text>
           <Controller
             control={control}
             name="email"
             rules={{
               required: "Informe o email.",
+              pattern: {
+                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                message: "E-mail inválido",
+              },
             }}
             render={({ field: { onChange, value } }) => (
               <Input
@@ -80,7 +84,7 @@ export function SignUp() {
               />
             )}
           />
-          <Text color="white">{errors.email?.message}</Text>
+          <Text color="red.500">{errors.email?.message}</Text>
           <Controller
             control={control}
             name="password"
@@ -96,7 +100,7 @@ export function SignUp() {
               />
             )}
           />
-          <Text color="white">{errors.password?.message}</Text>
+          <Text color="red.500">{errors.password?.message}</Text>
           <Controller
             control={control}
             name="password_confirm"
@@ -114,7 +118,7 @@ export function SignUp() {
               />
             )}
           />
-          <Text color="white">{errors.password_confirm?.message}</Text>
+          <Text color="red.500">{errors.password_confirm?.message}</Text>
           <Button
             title="Criar e acessar"
             onPress={handleSubmit(handleSignUp)}
