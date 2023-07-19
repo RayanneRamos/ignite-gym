@@ -15,7 +15,11 @@ type FormDataProps = {
 };
 
 export function SignUp() {
-  const { control, handleSubmit } = useForm<FormDataProps>();
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormDataProps>();
   const navigation = useNavigation();
 
   function handleGoBack() {
@@ -59,6 +63,7 @@ export function SignUp() {
               <Input placeholder="Nome" value={value} onChangeText={onChange} />
             )}
           />
+          <Text color="white">{errors.name?.message}</Text>
           <Controller
             control={control}
             name="email"
@@ -75,6 +80,7 @@ export function SignUp() {
               />
             )}
           />
+          <Text color="white">{errors.email?.message}</Text>
           <Controller
             control={control}
             name="password"
@@ -90,6 +96,7 @@ export function SignUp() {
               />
             )}
           />
+          <Text color="white">{errors.password?.message}</Text>
           <Controller
             control={control}
             name="password_confirm"
@@ -107,6 +114,7 @@ export function SignUp() {
               />
             )}
           />
+          <Text color="white">{errors.password_confirm?.message}</Text>
           <Button
             title="Criar e acessar"
             onPress={handleSubmit(handleSignUp)}
