@@ -3,6 +3,7 @@ import { UserDTO } from "../dtos/UserDTO";
 
 export type AuthContextDataProps = {
   user: UserDTO;
+  signIn: (email: string, password: string) => void;
 };
 
 type AuthContextProviderProps = {
@@ -21,10 +22,20 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
     avatar: "rayanne.png",
   });
 
+  function signIn(email: string, password: string) {
+    setUser({
+      name: "",
+      email,
+      avatar: "",
+      id: "",
+    });
+  }
+
   return (
     <AuthContext.Provider
       value={{
         user,
+        signIn,
       }}
     >
       {children}
