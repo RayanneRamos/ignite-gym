@@ -19,6 +19,8 @@ import { api } from "../services/api";
 import axios from "axios";
 import { Alert } from "react-native";
 import { AppError } from "../utils/AppError";
+import { useState } from "react";
+import { useAuth } from "../hooks/useAuth";
 
 type FormDataProps = {
   name: string;
@@ -50,6 +52,8 @@ export function SignUp() {
   });
   const navigation = useNavigation();
   const toast = useToast();
+  const [isLoading, setIsLoading] = useState(false);
+  const { signIn } = useAuth();
 
   function handleGoBack() {
     navigation.goBack();
@@ -57,9 +61,11 @@ export function SignUp() {
 
   async function handleSignUp({ name, email, password }: FormDataProps) {
     try {
-      const response = await api.post("/users", { name, email, password });
-      console.log(response.data);
+      setIsLoading(true);
+      await api.post("/users", { name, email, password });
+      await signIn(email, password);
     } catch (error) {
+      setIsLoading(false);
       const isAppError = error instanceof AppError;
       const title = isAppError
         ? error.message
@@ -152,6 +158,7 @@ export function SignUp() {
           <Button
             title="Criar e acessar"
             onPress={handleSubmit(handleSignUp)}
+            isLoading={isLoading}
           />
         </Center>
         <Button
