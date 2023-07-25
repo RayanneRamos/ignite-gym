@@ -1,5 +1,4 @@
 import { FlatList, HStack, Heading, Text, VStack, useToast } from "native-base";
-import { HomeHeader } from "../components/HomeHeader";
 import { Group } from "../components/Group";
 import { useCallback, useEffect, useState } from "react";
 import { ExerciseCard } from "../components/ExerciseCard";
@@ -9,6 +8,7 @@ import { api } from "../services/api";
 import { AppError } from "../utils/AppError";
 import { ExerciseDTO } from "../dtos/ExerciseDTO";
 import { Loading } from "../components/Loading";
+import { HomeHeader } from "../components/HomeHeader";
 
 export function Home() {
   const [groupSelected, setGroupSelected] = useState("costas");
@@ -18,8 +18,8 @@ export function Home() {
   const toast = useToast();
   const [isLoading, setIsLoading] = useState(true);
 
-  function handleOpenExerciseDetails() {
-    navigation.navigate("exercise");
+  function handleOpenExerciseDetails(exerciseId: string) {
+    navigation.navigate("exercise", { exerciseId });
   }
 
   async function fetchGroups() {
@@ -106,7 +106,10 @@ export function Home() {
             data={exercises}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
-              <ExerciseCard onPress={handleOpenExerciseDetails} data={item} />
+              <ExerciseCard
+                onPress={() => handleOpenExerciseDetails(item.id)}
+                data={item}
+              />
             )}
             showsVerticalScrollIndicator={false}
             _contentContainerStyle={{ paddingBottom: 20 }}
