@@ -11,7 +11,7 @@ import { Loading } from "../components/Loading";
 import { HomeHeader } from "../components/HomeHeader";
 
 export function Home() {
-  const [groupSelected, setGroupSelected] = useState("costas");
+  const [groupSelected, setGroupSelected] = useState("antebraço");
   const [groups, setGroups] = useState<string[]>([]);
   const [exercises, setExercises] = useState<ExerciseDTO[]>([]);
   const navigation = useNavigation<AppNavigatorRoutesProps>();
