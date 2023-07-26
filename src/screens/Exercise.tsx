@@ -43,7 +43,7 @@ export function Exercise() {
     try {
       setIsLoading(true);
 
-      const response = await api.get(`/exercise/${exerciseId}`);
+      const response = await api.get(`/exercises/${exerciseId}`);
       setExercise(response.data);
     } catch (error) {
       const isAppError = error instanceof AppError;
@@ -102,7 +102,7 @@ export function Exercise() {
                 w="full"
                 h={80}
                 source={{
-                  uri: `${api.defaults.baseURL}/exercise/demo/${exercise.demo}`,
+                  uri: `${api.defaults.baseURL}/exercise/demo/${exercise?.demo}`,
                 }}
                 alt="Nome do exercício"
                 resizeMode="cover"
