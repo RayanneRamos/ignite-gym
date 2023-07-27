@@ -64,7 +64,7 @@ export function Profile() {
   const [userPhoto, setUserPhoto] = useState(
     "https://github.com/RayanneRamos.png"
   );
-  const { user } = useAuth();
+  const { user, updateUserProfile } = useAuth();
   const [isUpdating, setUpdating] = useState(false);
   const {
     control,
@@ -120,7 +120,12 @@ export function Profile() {
     try {
       setUpdating(true);
 
+      const userUpdated = user;
+      userUpdated.name = data.name;
+
       await api.put("/users", data);
+      await updateUserProfile(userUpdated);
+
       toast.show({
         title: "Perfil atualizado com sucesso!",
         placement: "top",
@@ -263,4 +268,7 @@ export function Profile() {
       </ScrollView>
     </VStack>
   );
+}
+function updateUserProfile() {
+  throw new Error("Function not implemented.");
 }
