@@ -30,22 +30,20 @@ type FormDataProps = {
 };
 
 const profileSchema = yup.object({
-  name: yup
-    .string()
-    .required("Informe um nome.")
-    .min(3, "O nome precisa ter pelo menos 3 letras."),
+  name: yup.string().min(3, "O nome precisa ter pelo menos 3 letras."),
   email: yup.string().required("Informe um email.").email("E-mail inválido."),
   old_password: yup
     .string()
-    .required("Informe a senha.")
     .min(6, "A senha precisa ter pelo menos 6 dígitos."),
   new_password: yup
     .string()
-    .required("Informe a nova senha.")
-    .min(6, "A nova senha precisa ter pelo menos 6 dígitos."),
+    .min(6, "A nova senha precisa ter pelo menos 6 dígitos.")
+    .nullable()
+    .transform((value) => (!!value ? value : null)),
   confirm_password: yup
     .string()
-    .required("Confirme a senha.")
+    .nullable()
+    .transform((value) => (!!value ? value : null))
     .oneOf([yup.ref("new_password")], "A confirmação da senha não confere."),
 });
 
