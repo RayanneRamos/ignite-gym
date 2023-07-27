@@ -19,6 +19,7 @@ import { FileInfo } from "expo-file-system";
 import { useForm, Controller } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useAuth } from "../hooks/useAuth";
 
 type FormDataProps = {
   name: string;
@@ -55,6 +56,7 @@ export function Profile() {
   const [userPhoto, setUserPhoto] = useState(
     "https://github.com/RayanneRamos.png"
   );
+  const { user } = useAuth();
   const {
     control,
     handleSubmit,
@@ -62,7 +64,8 @@ export function Profile() {
   } = useForm<FormDataProps>({
     resolver: yupResolver(profileSchema),
     defaultValues: {
-      email: "rayanneramos@gmail.com",
+      name: user.name,
+      email: user.email,
     },
   });
   const toast = useToast();
@@ -158,6 +161,7 @@ export function Profile() {
             render={({ field: { onChange, value } }) => (
               <Input
                 bg="gray.600"
+                placeholder="Email"
                 isDisabled
                 value={value}
                 onChangeText={onChange}
