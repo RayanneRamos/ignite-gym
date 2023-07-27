@@ -107,7 +107,7 @@ export function Profile() {
     }
   }
 
-  function handleProfileUpdate(data: FormDataProps) {
+  async function handleProfileUpdate(data: FormDataProps) {
     console.log(data);
   }
 
