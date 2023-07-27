@@ -44,7 +44,12 @@ const profileSchema = yup.object({
     .string()
     .nullable()
     .transform((value) => (!!value ? value : null))
-    .oneOf([yup.ref("new_password")], "A confirmação da senha não confere."),
+    .oneOf([yup.ref("new_password")], "A confirmação da senha não confere.")
+    .when("new_password", {
+      is: (Field: any) => Field,
+      then: (schema) =>
+        schema.nullable().required("Informe a confirmação de senha."),
+    }),
 });
 
 const PHOTO_SIZE = 33;
