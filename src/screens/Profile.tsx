@@ -22,6 +22,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useAuth } from "../hooks/useAuth";
 import { api } from "../services/api";
 import { AppError } from "../utils/AppError";
+import defaultUserPhotoImage from "../assets/userPhotoDefault.png";
 
 type FormDataProps = {
   name: string;
@@ -61,9 +62,6 @@ const PHOTO_SIZE = 33;
 
 export function Profile() {
   const [photoIsLoading, setPhotoIsLoading] = useState(false);
-  const [userPhoto, setUserPhoto] = useState(
-    "https://github.com/RayanneRamos.png"
-  );
   const { user, updateUserProfile } = useAuth();
   const [isUpdating, setUpdating] = useState(false);
   const {
@@ -135,8 +133,6 @@ export function Profile() {
           placement: "top",
           bgColor: "green.500",
         });
-
-        //setUserPhoto(photoSelected.assets[0].uri);
       }
     } catch (error) {
       console.log(error);
@@ -191,7 +187,11 @@ export function Profile() {
             />
           ) : (
             <UserPhoto
-              source={{ uri: userPhoto }}
+              source={
+                user.avatar
+                  ? { uri: `${api.defaults.baseURL}/avatar/${user.avatar}` }
+                  : defaultUserPhotoImage
+              }
               alt="Foto do usuário"
               size={PHOTO_SIZE}
             />
