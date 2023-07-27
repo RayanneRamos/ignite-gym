@@ -20,12 +20,14 @@ import { useForm, Controller } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useAuth } from "../hooks/useAuth";
+import { api } from "../services/api";
+import { AppError } from "../utils/AppError";
 
 type FormDataProps = {
   name: string;
   email: string;
   old_password: string;
-  new_password: string;
+  password: string;
   confirm_password: string;
 };
 
@@ -35,7 +37,7 @@ const profileSchema = yup.object({
   old_password: yup
     .string()
     .min(6, "A senha precisa ter pelo menos 6 dígitos."),
-  new_password: yup
+  password: yup
     .string()
     .min(6, "A nova senha precisa ter pelo menos 6 dígitos.")
     .nullable()
@@ -44,8 +46,8 @@ const profileSchema = yup.object({
     .string()
     .nullable()
     .transform((value) => (!!value ? value : null))
-    .oneOf([yup.ref("new_password")], "A confirmação da senha não confere.")
-    .when("new_password", {
+    .oneOf([yup.ref("password")], "A confirmação da senha não confere.")
+    .when("password", {
       is: (Field: any) => Field,
       then: (schema) =>
         schema
@@ -63,6 +65,7 @@ export function Profile() {
     "https://github.com/RayanneRamos.png"
   );
   const { user } = useAuth();
+  const [isUpdating, setUpdating] = useState(false);
   const {
     control,
     handleSubmit,
@@ -114,7 +117,28 @@ export function Profile() {
   }
 
   async function handleProfileUpdate(data: FormDataProps) {
-    console.log(data);
+    try {
+      setUpdating(true);
+
+      await api.put("/users", data);
+      toast.show({
+        title: "Perfil atualizado com sucesso!",
+        placement: "top",
+        bgColor: "green.500",
+      });
+    } catch (error) {
+      const isAppError = error instanceof AppError;
+      const title = isAppError
+        ? error.message
+        : "Não foi possível atualizar os dados. Tente novamente mais tarde.";
+      toast.show({
+        title,
+        placement: "top",
+        bgColor: "red.500",
+      });
+    } finally {
+      setUpdating(false);
+    }
   }
 
   return (
@@ -202,7 +226,7 @@ export function Profile() {
           />
           <Controller
             control={control}
-            name="new_password"
+            name="password"
             render={({ field: { onChange, value } }) => (
               <Input
                 bg="gray.600"
@@ -210,7 +234,7 @@ export function Profile() {
                 secureTextEntry
                 value={value}
                 onChangeText={onChange}
-                errorMessage={errors.new_password?.message}
+                errorMessage={errors.password?.message}
               />
             )}
           />
@@ -232,6 +256,7 @@ export function Profile() {
           <Button
             title="Atualizar"
             mt={4}
+            isLoading={isUpdating}
             onPress={handleSubmit(handleProfileUpdate)}
           />
         </Center>
