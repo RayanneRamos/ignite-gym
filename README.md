@@ -24,7 +24,7 @@
 4. **Histórico de exercícios realizados no dia**
 5. **Disponível para Android e iOS, garantindo acessibilidade em dispositivos móveis**
 
-## 🧪 Technologies
+## 🧪 Tecnologias
 
 Esse projeto foi desenvolvido com as seguintes tecnologias:
 
