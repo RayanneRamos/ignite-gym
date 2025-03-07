@@ -16,6 +16,14 @@
 
 [Ignite GYM]() é o segundo projeto desenvolvido durante o bootcamp ignite da [Rocketseat](https://www.rocketseat.com.br/) que foca nas tecnologias ReactJS, React Native e NodeJS. Consiste em criar uma aplicação que o usuário pode criar uma conta e logar e nesse App ver a execução de cada exercício e também ele tem a possibilidade de marcar aquele exercício como concluído e acompanhar pelo histórico os exercícios feito no dia. Disponível nas plataformas Android e IOS.
 
+## 🌟 Funcionalidades
+
+1. **Criação de conta e login de usuário** 
+2. **Visualização de exercícios, com detalhes sobre cada um**
+3. **Marcação de exercícios como concluídos, ajudando a acompanhar o progresso**
+4. **Histórico de exercícios realizados no dia**
+5. **Disponível para Android e iOS, garantindo acessibilidade em dispositivos móveis**
+
 ## 🧪 Technologies
 
 Esse projeto foi desenvolvido com as seguintes tecnologias:
